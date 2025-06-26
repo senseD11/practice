@@ -1,1 +1,86 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Keto Coach</title>
+    <style>
+        body {
+            background: #1d3557;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            color: #06d6a0;
+            font-size: 2.5rem;
+        }
+        .hero {
+            background: #457b9d;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+        input[type="email"] {
+            padding: 1rem;
+            width: 300px;
+            border-radius: 50px;
+            border: none;
+            margin-right: 1rem;
+        }
+        button {
+            background: #ff006e;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+        .feature {
+            background: #457b9d;
+            padding: 1.5rem;
+            border-radius: 15px;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Keto Coach</h1>
+        <p>Your personal keto assistant powered by AI!</p>
+        
+        <div class="hero">
+            <h2>Start Your Free Trial</h2>
+            <form action="/signup" method="POST">
+                <input type="email" name="email" placeholder="Your email address" required>
+                <button type="submit">Get Started →</button>
+            </form>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🍳 Meal Analysis</h3>
+                <p>Get instant keto feedback</p>
+            </div>
+            <div class="feature">
+                <h3>📊 Progress Tracking</h3>
+                <p>See your keto journey</p>
+            </div>
+            <div class="feature">
+                <h3>⚡ Fast Results</h3>
+                <p>Reach ketosis faster</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
