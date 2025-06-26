@@ -1,1 +1,145 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Keto Dashboard</title>
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: #06d6a0;
+        }
+        .card {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            background: #334155;
+            color: white;
+            border: none;
+            margin-bottom: 1rem;
+            min-height: 100px;
+        }
+        button {
+            background: #06d6a0;
+            color: #0f172a;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .meal-log {
+            margin-top: 2rem;
+        }
+        .meal {
+            background: #334155;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .ai-response {
+            color: #06d6a0;
+            margin-top: 0.5rem;
+        }
+        .upgrade-banner {
+            background: #ff006e;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Keto Dashboard</h1>
+            <div>Free Account</div>
+        </header>
+        
+        <div class="upgrade-banner">
+            <h2>✨ Upgrade to Premium!</h2>
+            <p>Get personalized meal plans and advanced tracking</p>
+            <a href="/upgrade" style="color:white; font-weight:bold">Click to Upgrade</a>
+        </div>
+        
+        <div class="card">
+            <h2>Log Your Meal</h2>
+            <form id="mealForm">
+                <textarea name="meal" placeholder="What did you eat? (e.g., '3 eggs and bacon')"></textarea>
+                <button type="submit">Analyze with AI</button>
+            </form>
+            <div id="responseContainer"></div>
+        </div>
+        
+        <div class="meal-log">
+            <h2>Your Meal History</h2>
+            {% if meals %}
+                {% for meal in meals|reverse %}
+                <div class="meal">
+                    <strong>{{ meal.meal }}</strong>
+                    <div class="ai-response">{{ meal.ai_feedback }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No meals logged yet. Your AI analysis will appear here!</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('mealForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const meal = formData.get('meal');
+            
+            const responseContainer = document.getElementById('responseContainer');
+            responseContainer.innerHTML = "<p>🧠 AI is thinking...</p>";
+            
+            try {
+                const response = await fetch('/log_meal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `meal=${encodeURIComponent(meal)}`
+                });
+                
+                const data = await response.text();
+                responseContainer.innerHTML = data;
+                
+                // Clear form
+                e.target.reset();
+                
+                // Refresh meal history after 2 seconds
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                
+            } catch (error) {
+                responseContainer.innerHTML = '<p>⚠️ Error: Please try again</p>';
+            }
+        });
+    </script>
+</body>
+</html>
